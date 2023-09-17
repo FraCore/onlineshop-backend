@@ -3,6 +3,7 @@ package com.onlineshop.onlineshopbackendapplication.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name="products")
@@ -10,10 +11,13 @@ public class Product {
     @Id
     private Integer product_id;
 
+    @NotNull
     private String product_name;
 
+    @NotNull
     private String product_unit;
 
+    @NotNull
     private Double product_price;
 
     public  Product() {}
