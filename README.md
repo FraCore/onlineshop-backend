@@ -1,2 +1,2 @@
 # onlineshop_backend
-Onlineshop Backend
+Onlineshop Backend using JPA
