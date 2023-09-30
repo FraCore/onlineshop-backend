@@ -26,11 +26,12 @@ public class ProductController {
     @PostMapping(path="/add", consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ResponseEntity<String> addNewProduct(@Valid @RequestBody Product product) {
         if(isProductPresent(product.getProduct_id())) {
-            return new ResponseEntity<>("Product already exists", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         try {
-            productRepository.save(product);
-            return new ResponseEntity<>("Product added successfully", HttpStatus.CREATED);
+            Product savedEntity = productRepository.save(product);
+            String jsonResponse = String.format("{\"id\": %d}", savedEntity.getProduct_id());
+            return new ResponseEntity<>(jsonResponse, HttpStatus.CREATED);
 
         }catch(Exception e) {
             return new ResponseEntity<>("An error occurred",HttpStatus.INTERNAL_SERVER_ERROR);
@@ -45,7 +46,7 @@ public class ProductController {
         }
         try {
             product.setProduct_id(productId);
-            productRepository.save(product);
+            Product savedProduct = productRepository.save(product);
             return new ResponseEntity<>("Product successfully updated", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("An error occurred",HttpStatus.INTERNAL_SERVER_ERROR);
